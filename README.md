@@ -2,8 +2,8 @@
 Grafowa baza danych realizowana w ramach kursu BD2021 AGH
 
 # Technologie
-neo4j
+neo4j, python
 
 # Autorstwo
-Krzysztof Jędrychowski
+Krzysztof Jędrychowski,
 Szymon Rynkowski
