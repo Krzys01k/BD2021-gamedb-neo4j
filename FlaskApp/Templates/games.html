@@ -2,12 +2,16 @@
 
 {%block content%}
 <h1>Games:</h1>
-<div class="container" style="margin:50px; width:400px; ">
+<div style="margin: 0 50px" class="row row-cols-1 row-cols-md-3 g-4">
     {% for game in games %}
-    <div class="container" style="margin:10px">
-        {{ game['title'] }}:
-        <br>
-        {{ game['desc'] }}
+    <div class="col">
+        <div class="card">
+            <img src="{{game['photo_url']}}" class="card-img-top" alt="{{game['title']}}">
+            <div class="card-body">
+                <h5 class="card-title">{{ game['title'] }}</h5>
+                <p class="card-text">{{ game['desc'] }}</p>
+            </div>
+        </div>
     </div>
     {% endfor %}
 </div>
