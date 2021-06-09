@@ -43,6 +43,12 @@ def get_games():
 
         return games
 
+def get_game(game_title):
+    with driver.session() as session:
+        nodes = session.run("match (g:Game{title: '%s'}) return (g)" % game_title)
+        game = nodes.data()[0]['g']
+        return game
+        
 
 def get_followed(name):
     with driver.session() as session:
@@ -70,6 +76,16 @@ def hello_world():
 def games():
     games_list = get_games()
     return render_template("games.html", games=games_list, name=name)
+
+@app.route('/games/<game_title>')
+def game_details(game_title):
+    global name
+    # TODO: posts = get_posts(game_title)
+    game = get_game(game_title)
+    
+    return render_template("game_details.html", name=name, game=game)
+
+
 
 
 @app.route('/users', methods=['POST', 'GET'])
