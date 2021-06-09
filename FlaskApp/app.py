@@ -44,6 +44,24 @@ def get_games():
         return games
 
 
+def get_followed(name):
+    with driver.session() as session:
+        followed_nodes = session.run("match (u:User)<-[f:FOLLOWS]-(u2:User{name:'%s'}) return (u)" % name)
+        followed = []
+        for node in followed_nodes.data():
+            followed.append(node['u']['name'])
+
+        return followed
+
+def get_following(name):
+    with driver.session() as session:
+        following_nodes = session.run("match (u:User)-[f:FOLLOWS]->(u2:User{name:'%s'}) return (u)" % name)
+        following = []
+        for node in following_nodes.data():
+            following.append(node['u']['name'])
+
+        return following
+
 @app.route('/')
 def hello_world():
     return render_template("base.html", message="Hello !!!!", name=name)
@@ -73,7 +91,10 @@ def users():
 @app.route('/users/<user_name>', methods=['POST', 'GET'])
 def user_details(user_name):
     global name
-    return render_template("user_details.html", name=name, user_name=user_name)
+    followed = get_followed(user_name)
+    following = get_following(user_name)
+
+    return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
