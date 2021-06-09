@@ -105,10 +105,10 @@ def follow():
     with driver.session() as session:
         session.run(
             """
-            MATCH (a:User{name:'%s'}) 
-            where not (a) -[:FOLLOWS]->(:User{name:'%s'}) 
-            create (a) -[:FOLLOWS]->(:User{name:'%s'})
-            """ % (name, followed_name, followed_name)
+            MATCH (a:User{name:'%s'}), (b:User{name:"%s"})
+            where not (a) -[:FOLLOWS]->(b) 
+            create (a) -[:FOLLOWS]->(b)
+            """ % (name, followed_name)
         )
     return redirect(url_for('user_details', user_name=followed_name))
 

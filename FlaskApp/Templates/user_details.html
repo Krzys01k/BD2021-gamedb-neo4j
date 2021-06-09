@@ -15,6 +15,11 @@
       <button type="submit" class="btn btn-dark" value="{{user_name}}" name="follow">Follow</button>
     </form>
     {% endif %}
+    {% if name != "" and name in followed%}
+    <form action = "/unfollow" method = "POST" style="margin: auto 0">
+      <button type="submit" class="btn btn-dark" value="{{user_name}}" name="unfollow">Unfollow</button>
+    </form>
+    {% endif %}
 </div>
 <div style="margin:30px; width:250px; ">
     <h4>{{user_name}} follows:</h4>
