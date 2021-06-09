@@ -46,7 +46,7 @@ def get_games():
 
 def get_followed(name):
     with driver.session() as session:
-        followed_nodes = session.run("match (u:User)<-[f:FOLLOWS]-(u2:User{name:'%s'}) return (u)" % name)
+        followed_nodes = session.run("match (u:User)-[f:FOLLOWS]->(u2:User{name:'%s'}) return (u)" % name)
         followed = []
         for node in followed_nodes.data():
             followed.append(node['u']['name'])
@@ -55,7 +55,7 @@ def get_followed(name):
 
 def get_following(name):
     with driver.session() as session:
-        following_nodes = session.run("match (u:User)-[f:FOLLOWS]->(u2:User{name:'%s'}) return (u)" % name)
+        following_nodes = session.run("match (u:User)<-[f:FOLLOWS]-(u2:User{name:'%s'}) return (u)" % name)
         following = []
         for node in following_nodes.data():
             following.append(node['u']['name'])
@@ -95,6 +95,26 @@ def user_details(user_name):
     following = get_following(user_name)
 
     return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following)
+
+
+@app.route('/follow', methods=['POST'])
+def follow():
+    global name
+    followed_name = request.form.get('follow')
+
+    with driver.session() as session:
+        session.run(
+            """
+            MATCH
+              (a:User),
+              (b:User)
+            WHERE a.name = '%s' AND b.name = '%s'
+            CREATE (a)<-[r:FOLLOWS]-(b)
+            RETURN type(r)
+            """ % (followed_name, name)
+        )
+    return redirect(url_for('user_details', user_name=followed_name))
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -141,6 +161,7 @@ def logout():
     global name
     name = ""
     return render_template("base.html", name=name, message="Logged Out")
+
 
 
 if __name__ == '__main__':
