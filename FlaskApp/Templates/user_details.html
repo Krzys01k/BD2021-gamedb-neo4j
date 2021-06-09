@@ -2,13 +2,13 @@
 
 {%block content%}
 {% if name == user_name%}
-<h1>Your profile:</h1>
+<h2 style="margin: 10px">Your profile:</h2>
+{% else %}
+<h2 style="margin: 10px"> {{user_name}} Profile:</h2>
 {% endif %}
-<h2 style="margin-left:10px"> {{user_name}} Profile:</h2>
-
-<div style="margin:30px; width:200px; ">
-    <h4>following:</h4>
-        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden">
+<div style="margin:30px; width:250px; ">
+    <h4>{{user_name}} follows:</h4>
+        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden; width:150px;">
             {% for f in following %}
             <div class="container" style="margin:10px" >
                 <a class="btn btn-dark" href="\users\{{f}}" style="width:100px;">{{ f }}</a>
@@ -16,8 +16,8 @@
             {% endfor %}
         </div>
 
-    <h4>followed:</h4>
-        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden">
+    <h4>{{user_name}} is followed by:</h4>
+        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden; width:150px;">
             {% for f in followed %}
             <div class="container" style="margin:10px">
                 <a class="btn btn-dark" href="\users\{{f}}" style="width: 100px">{{ f }}</a>
