@@ -113,6 +113,19 @@ def follow():
     return redirect(url_for('user_details', user_name=followed_name))
 
 
+@app.route('/unfollow', methods=['POST'])
+def unfollow():
+    global name
+    followed_name = request.form.get('unfollow')
+
+    with driver.session() as session:
+        session.run(
+            """
+            match (u:User{name:'%s'})-[f:FOLLOWS]->(u2:User{name:'%s'}) delete f
+            """ % (name, followed_name)
+        )
+    return redirect(url_for('user_details', user_name=followed_name))
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     global name
