@@ -9,8 +9,8 @@ app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
 name = ""
 
 driver = GraphDatabase.driver(
-  "bolt://34.201.249.196:7687",
-  auth=basic_auth("neo4j", "grant-strains-leg"))
+  "bolt://3.227.247.75:7687",
+  auth=basic_auth("neo4j", "mint-baths-mathematics"))
 
 
 def hash_password(password):
