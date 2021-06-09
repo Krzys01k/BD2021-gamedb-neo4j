@@ -4,7 +4,28 @@
 {% if name == user_name%}
 <h1>Your profile:</h1>
 {% endif %}
-<h2>{{user_name}}</h2>
+<h2 style="margin-left:10px"> {{user_name}} Profile:</h2>
+
+<div style="margin:30px; width:200px; ">
+    <h4>following:</h4>
+        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden">
+            {% for f in following %}
+            <div class="container" style="margin:10px" >
+                <a class="btn btn-dark" href="\users\{{f}}" style="width:100px;">{{ f }}</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    <h4>followed:</h4>
+        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden">
+            {% for f in followed %}
+            <div class="container" style="margin:10px">
+                <a class="btn btn-dark" href="\users\{{f}}" style="width: 100px">{{ f }}</a>
+            </div>
+            {% endfor %}
+        </div>
+</div>
+
 {%endblock%}
 
 
