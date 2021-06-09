@@ -54,6 +54,27 @@ def games():
     return render_template("games.html", games=games_list, name=name)
 
 
+@app.route('/users', methods=['POST', 'GET'])
+def users():
+    global name
+    message = ""
+    if request.method == 'POST':
+        with driver.session() as session:
+            nodes = session.run("MATCH (n:User{name:'%s'}) RETURN (n)" % request.form.get("search"))
+            nodes_data = nodes.data()
+            if nodes_data.__len__() == 1:
+                return redirect(url_for('user_details',user_name = nodes_data[0]['n']['name']))
+            else:
+                message = "No such User"
+
+    return render_template("users.html", name = name, message = message)
+
+
+@app.route('/users/<user_name>', methods=['POST', 'GET'])
+def user_details(user_name):
+    global name
+    return render_template("user_details.html", name=name, user_name=user_name)
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     global name
