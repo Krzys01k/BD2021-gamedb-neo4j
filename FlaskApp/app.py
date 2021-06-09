@@ -43,6 +43,7 @@ def get_games():
 
         return games
 
+
 def get_game(game_title):
     with driver.session() as session:
         nodes = session.run("match (g:Game{title: '%s'}) return (g)" % game_title)
@@ -59,6 +60,7 @@ def get_followed(name):
 
         return followed
 
+
 def get_following(name):
     with driver.session() as session:
         following_nodes = session.run("match (u:User)<-[f:FOLLOWS]-(u2:User{name:'%s'}) return (u)" % name)
@@ -67,6 +69,20 @@ def get_following(name):
             following.append(node['u']['name'])
 
         return following
+
+
+def add_review_to_db(author_name, game_title, score, content):
+    with driver.session() as session:
+        session.run(
+            """
+            match (u:User{name:'%s'}), (g:Game{title:'%s'})
+            where not (u)-[:WROTE]->()-[:ADDRESSES]->(g)
+            merge (u)-[f:WROTE]->(r:Review{score:%i, content:'%s'})-[f2:ADDRESSES]->(g)
+            return f, f2, u, g, r
+            """ % (author_name, game_title, score, content)
+        )
+    return
+
 
 @app.route('/')
 def hello_world():
