@@ -1,0 +1,10 @@
+{%extends "base.html"%}
+
+{%block content%}
+{% if name == user_name%}
+<h1>Your profile:</h1>
+{% endif %}
+<h2>{{user_name}}</h2>
+{%endblock%}
+
+

@@ -16,12 +16,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="games">Games</a>
+            <a class="nav-link active" aria-current="page" href="/games">Games</a>
+            <a class="nav-link active" aria-current="page" href="/users">Users</a>
+
             {% if name == "" %}
-            <a class="nav-link" href="login">Login</a>
-            <a class="nav-link" href="register">Register</a>
+            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link" href="/register">Register</a>
             {% else %}
-            <a class="nav-link" href="logout">Logout</a>
+            <a class="nav-link" href="/logout">Logout</a>
             {% endif %}
             <a class="nav-link disabled" href="#">Logged in as {% if name == "" %} guest {% else %} {{name}} {% endif %} </a>
 
