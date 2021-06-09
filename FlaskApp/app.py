@@ -4,16 +4,31 @@ from os import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
-games = []
-name = "guest"
+name = ""
 
 driver = GraphDatabase.driver(
   "bolt://34.201.249.196:7687",
   auth=basic_auth("neo4j", "grant-strains-leg"))
 
+
+def get_games():
+    with driver.session() as session:
+        game_nodes = session.run("match (g:Game) return (g)")
+        games = []
+        for node in game_nodes.data():
+            games.append(node['g'])
+
+        return games
+
+
 @app.route('/')
 def hello_world():
     return render_template("base.html", message="Hello !!!!", name=name)
+
+@app.route('/games')
+def games():
+    games_list = get_games()
+    return render_template("games.html", games=games_list, name=name)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -65,20 +80,9 @@ def register():
 @app.route('/logout')
 def logout():
     global name
-    name = "guest"
+    name = ""
     flash("Logged Out")
     return render_template("base.html", name=name, message="Logged Out")
-
-
-@app.route("/games")
-def games():
-    global name
-    return render_template("base.html", name=name, message="Games")
-
-@app.route("/people")
-def people():
-    global name
-    return render_template("base.html", name=name, message="People")
 
 
 if __name__ == '__main__':
