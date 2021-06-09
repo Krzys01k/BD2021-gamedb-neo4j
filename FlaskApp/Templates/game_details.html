@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+
+{%block content%}
+
+<div style="margin: 0 20px" class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <img src = "{{game.photo_url}}" class="card-img-top" alt="{{game.title}}">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card"  style="height: 100%">
+        <div class="card-body">
+            <h5 class="card-title">{{game.title}}</h5>
+            <hr>
+            <p class="card-text">{{game.desc}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{%endblock%}
+
+
