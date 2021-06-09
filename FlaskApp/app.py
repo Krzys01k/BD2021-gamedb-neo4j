@@ -70,6 +70,17 @@ def logout():
     return render_template("base.html", name=name, message="Logged Out")
 
 
+@app.route("/games")
+def games():
+    global name
+    return render_template("base.html", name=name, message="Games")
+
+@app.route("/people")
+def people():
+    global name
+    return render_template("base.html", name=name, message="People")
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
