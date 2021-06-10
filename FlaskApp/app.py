@@ -87,6 +87,19 @@ def add_review_to_db(author_name, game_title, score, content):
     return
 
 
+def update_review_in_db(author_name, game_title, score, content):
+    # adds review by user author_name to game with game_title with parameters score i content
+    with driver.session() as session:
+        session.run(
+            """
+            match (u:User{name:'%s'})-[:WROTE]->(r:Review)-[:ADDRESSES]->(g:Game{title:'%s'})
+            set r.score = %s, r.content = '%s'
+            return r
+            """ % (author_name, game_title, score, content)
+        )
+    return
+
+
 def review_exists(author_name, game_title):
     # checks if review exists
     with driver.session() as session:
@@ -152,7 +165,6 @@ def game_details(game_title):
     global name
     all_reviews = get_reviews()
     game_reviews = list(filter(lambda d: d['title'] in [game_title], all_reviews))
-    print(game_reviews)
     game = get_game(game_title)
     rev_exists = True
     if name:
@@ -169,6 +181,19 @@ def add_review_form(game_title):
         return redirect(url_for('game_details', game_title=game_title))
 
     return render_template("add_review.html", name=name, game_title=game_title)
+
+
+@app.route('/update_review/<user_name>/<game_title>', methods=['POST', 'GET'])
+def update_review_form(user_name, game_title):
+    global name
+    if request.method == 'POST':
+        print(name, game_title, request.form.get('score'), request.form.get('content'))
+        update_review_in_db(name, game_title, request.form.get('score'), request.form.get('content'))
+        return redirect(url_for('user_details', user_name=user_name))
+
+    return render_template("update_review.html", name=name, game_title=game_title, user_name = user_name)
+
+
 
 @app.route('/reviews')
 def reviews():
