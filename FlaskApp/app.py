@@ -160,7 +160,7 @@ def add_review_form(game_title):
     global name
     if request.method == 'POST':
         add_review_to_db(name, game_title, request.form.get('score'), request.form.get('content'))
-        return redirect(url_for('game_details', game_title=game_title, message="Review added"))
+        return redirect(url_for('game_details', game_title=game_title))
 
     return render_template("add_review.html", name=name, game_title=game_title)
 
@@ -231,7 +231,6 @@ def login():
     message = ""
 
     if request.method == 'POST':
-        print("login form")
         with driver.session() as session:
             nodes = session.run("MATCH (n:User{name:'%s'}) RETURN (n)" % request.form.get("name"))
             nodes_data = nodes.data()
@@ -239,7 +238,7 @@ def login():
                 user = nodes_data[0]['n']
                 if verify_password(user['password'], request.form.get("password")):
                     name = request.form.get("name")
-                    message = "login successful"
+                    return redirect('/login_success')
                 else:
                     message = "login failed"
             else:
@@ -277,6 +276,11 @@ def register_success():
     global name
     return render_template("base.html", name=name, message="Register Successful")
 
+
+@app.route('/login_success')
+def login_success():
+    global name
+    return render_template("base.html", name=name, message="Login Successful")
 
 
 if __name__ == '__main__':
