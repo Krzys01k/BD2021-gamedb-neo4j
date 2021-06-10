@@ -2,9 +2,11 @@
 
 {%block content%}
 
-<a href="/games" class="btn btn-dark" style="width = 100px; margin: 10px 10px 10px 33px">Go back</a>
+<a href="/games" class="btn btn-dark" style="width: 100px; margin: 10px 10px 10px 33px">Go back</a>
 {% if not rev_exists %}
+
 <a href="/add_review/{{game.title}}" class="btn btn-dark" style="width = 100px; margin: 10px">Add Opinion</a>
+
 {% endif %}
 
 <div style="margin: 0 20px" class="row">
