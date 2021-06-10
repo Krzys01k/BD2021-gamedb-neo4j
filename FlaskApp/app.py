@@ -144,13 +144,15 @@ def games():
 @app.route('/games/<game_title>')
 def game_details(game_title):
     global name
-    # TODO: posts = get_posts(game_title)
+    all_reviews = get_reviews()
+    game_reviews = list(filter(lambda d: d['title'] in [game_title], all_reviews))
+    print(game_reviews)
     game = get_game(game_title)
     rev_exists = True
     if name:
         rev_exists = review_exists(name, game.get('title'))
     
-    return render_template("game_details.html", name=name, game=game, rev_exists=rev_exists)
+    return render_template("game_details.html", name=name, game=game, rev_exists=rev_exists, reviews=game_reviews)
 
 
 @app.route('/add_review/<game_title>', methods=['POST', 'GET'])
