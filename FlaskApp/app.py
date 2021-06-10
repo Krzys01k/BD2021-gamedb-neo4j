@@ -141,14 +141,14 @@ def game_details(game_title):
     return render_template("game_details.html", name=name, game=game, rev_exists=rev_exists)
 
 
-@app.route('/add_opinion/<game_title>', methods=['POST', 'GET'])
-def add_opinion_form(game_title):
+@app.route('/add_review/<game_title>', methods=['POST', 'GET'])
+def add_review_form(game_title):
     global name
     if request.method == 'POST':
         add_review_to_db(name, game_title, request.form.get('score'), request.form.get('content'))
         return redirect(url_for('game_details', game_title=game_title, message="Review added"))
 
-    return render_template("add_opinion.html", name=name, game_title=game_title)
+    return render_template("add_review.html", name=name, game_title=game_title)
 
 
 
