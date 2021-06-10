@@ -52,7 +52,10 @@
                       <p class="card-text" style="margin-left: 10px"><b>Score: </b> {{r['score']}}</p>
                       <p class="card-text" style="margin-left: 10px"><b>Content:</b><br> {{r['content']}}</p>
                       {% if name == user_name%}
-                      <a class="btn btn-dark" href="\update_review\{{user_name}}\{{r['game']}}" style="width:130px;">update</a>
+                      <span>
+                      <a class="btn btn-dark" href="\update_review\{{user_name}}\{{r['game']}}" style="width:100px; margin-right: 10px;">Update</a>
+                      <a class="btn btn-dark" href="\delete_review\{{user_name}}\{{r['game']}}" style="width:100px;">Delete</a>
+                      </span>
                       {% endif %}
                   </div>
             </div>

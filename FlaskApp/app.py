@@ -100,6 +100,18 @@ def update_review_in_db(author_name, game_title, score, content):
     return
 
 
+def delete_review_in_db(author_name, game_title):
+    # adds review by user author_name to game with game_title with parameters score i content
+    with driver.session() as session:
+        session.run(
+            """
+            match (u:User{name:'%s'})-[f1:WROTE]->(r:Review)-[f2:ADDRESSES]->(g:Game{title:'%s'})
+            delete f1, f2, (r)
+            """ % (author_name, game_title)
+        )
+    return
+
+
 def review_exists(author_name, game_title):
     # checks if review exists
     with driver.session() as session:
@@ -193,6 +205,12 @@ def update_review_form(user_name, game_title):
 
     return render_template("update_review.html", name=name, game_title=game_title, user_name = user_name)
 
+
+@app.route('/delete_review/<user_name>/<game_title>', methods=['POST', 'GET'])
+def delete_review(user_name, game_title):
+    global name
+    delete_review_in_db(user_name, game_title)
+    return redirect(url_for('user_details', user_name=user_name))
 
 
 @app.route('/reviews')
