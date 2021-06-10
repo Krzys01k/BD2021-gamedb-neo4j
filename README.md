@@ -22,8 +22,8 @@ Reprezentowany przez wierzchołek o etykiecie User oraz atrybutach:
 Reprezentowana przez wierzchołek o etykiecie Game oraz atrybutach:
 1. title - tytuł gry
 2. desc - któtki opis
-4. photo_url - url do zdjęcia reprezentującego gre
-5. relased - data wydania
+3. photo_url - url do zdjęcia reprezentującego gre
+4. relased - data wydania
 
 ## Recenzja
 Reprezentowana przez wierzchołek o etykiecie Review oraz atrybutach:
