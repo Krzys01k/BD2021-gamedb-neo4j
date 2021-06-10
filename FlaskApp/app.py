@@ -77,7 +77,7 @@ def add_review_to_db(author_name, game_title, score, content):
             """
             match (u:User{name:'%s'}), (g:Game{title:'%s'})
             where not (u)-[:WROTE]->()-[:ADDRESSES]->(g)
-            merge (u)-[f:WROTE]->(r:Review{score:%i, content:'%s'})-[f2:ADDRESSES]->(g)
+            merge (u)-[f:WROTE]->(r:Review{score:%s, content:'%s'})-[f2:ADDRESSES]->(g)
             return f, f2, u, g, r
             """ % (author_name, game_title, score, content)
         )
@@ -100,6 +100,16 @@ def game_details(game_title):
     game = get_game(game_title)
     
     return render_template("game_details.html", name=name, game=game)
+
+
+@app.route('/add_opinion/<game_title>', methods=['POST', 'GET'])
+def add_opinion_form(game_title):
+    global name
+    if request.method == 'POST':
+        add_review_to_db(name, game_title, request.form.get('score'), request.form.get('content'))
+        return redirect(url_for('game_details', game_title=game_title, message="Review added"))
+
+    return render_template("add_opinion.html", name=name, game_title=game_title)
 
 
 
