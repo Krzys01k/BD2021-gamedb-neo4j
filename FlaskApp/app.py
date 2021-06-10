@@ -98,6 +98,28 @@ def review_exists(author_name, game_title):
         return 0
 
 
+def get_user_reviews(user_name):
+    with driver.session() as session:
+        nodes = session.run(
+            """
+            match (u:User{name:'%s'}), (r:Review), (g:Game)
+            where  (u)-[:WROTE]->(r)-[:ADDRESSES]->(g)
+            return (r), (g)
+            """ % user_name
+        )
+        reviews = []
+
+        for n in nodes:
+            review = {
+                'game': n['g']['title'],
+                'score': n['r']['score'],
+                'content': n['r']['content']
+            }
+            reviews.append(review)
+
+        return reviews
+
+
 @app.route('/')
 def hello_world():
     return render_template("base.html", message="Hello !!!!", name=name)
@@ -152,8 +174,9 @@ def user_details(user_name):
     global name
     followed = get_followed(user_name)
     following = get_following(user_name)
+    reviews = get_user_reviews(user_name)
 
-    return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following)
+    return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following, reviews=reviews)
 
 
 @app.route('/follow', methods=['POST'])
