@@ -110,6 +110,28 @@ def get_reviews():
         return reviews
 
 
+def get_user_reviews(user_name):
+    with driver.session() as session:
+        nodes = session.run(
+            """
+            match (u:User{name:'%s'}), (r:Review), (g:Game)
+            where  (u)-[:WROTE]->(r)-[:ADDRESSES]->(g)
+            return (r), (g)
+            """ % user_name
+        )
+        reviews = []
+
+        for n in nodes:
+            review = {
+                'game': n['g']['title'],
+                'score': n['r']['score'],
+                'content': n['r']['content']
+            }
+            reviews.append(review)
+
+        return reviews
+
+
 @app.route('/')
 def hello_world():
     return render_template("base.html", message="Hello !!!!", name=name)
@@ -131,14 +153,14 @@ def game_details(game_title):
     return render_template("game_details.html", name=name, game=game, rev_exists=rev_exists)
 
 
-@app.route('/add_opinion/<game_title>', methods=['POST', 'GET'])
-def add_opinion_form(game_title):
+@app.route('/add_review/<game_title>', methods=['POST', 'GET'])
+def add_review_form(game_title):
     global name
     if request.method == 'POST':
         add_review_to_db(name, game_title, request.form.get('score'), request.form.get('content'))
         return redirect(url_for('game_details', game_title=game_title, message="Review added"))
 
-    return render_template("add_opinion.html", name=name, game_title=game_title)
+    return render_template("add_review.html", name=name, game_title=game_title)
 
 @app.route('/reviews')
 def reviews():
@@ -167,8 +189,9 @@ def user_details(user_name):
     global name
     followed = get_followed(user_name)
     following = get_following(user_name)
+    reviews = get_user_reviews(user_name)
 
-    return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following)
+    return render_template("user_details.html", name=name, user_name=user_name, followed=followed, following=following, reviews=reviews)
 
 
 @app.route('/follow', methods=['POST'])
