@@ -22,9 +22,9 @@
     {% endif %}
 </div>
 <div class="d-flex flex-row">
-<div style="margin:40px; width:250px; margin-top:0">
+<div style="margin:40px; width:240px; margin-top:0; height: 500px;">
     <h4>{{user_name}} follows:</h4>
-        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden; width:180px; margin: 20px; margin-left:5px;">
+        <div class="scrollspy-example" style="max-height:200px; overflow-y: scroll; overflow-x:hidden; width:180px; margin: 20px; margin-left:5px;">
             {% for f in following %}
             <div class="container" style="margin:10px 10px 10px 0" >
                 <a class="btn btn-dark" href="\users\{{f}}" style="width:130px;">{{ f }}</a>
@@ -33,7 +33,7 @@
         </div>
 
     <h4>{{user_name}} is followed by:</h4>
-        <div class="scrollspy-example" style="max-height:300px; overflow-y: scroll; overflow-x:hidden; width:180px; margin: 20px; margin-left:5px;">
+        <div class="scrollspy-example" style="max-height:200px; overflow-y: scroll; overflow-x:hidden; width:180px; margin: 20px; margin-left:5px;">
             {% for f in followed %}
             <div class="container" style="margin:10px 10px 10px 0">
                 <a class="btn btn-dark" href="\users\{{f}}" style="width: 130px">{{ f }}</a>
@@ -42,19 +42,16 @@
         </div>
 </div>
 
-    <div style=" height: 100%; width:100%">
+    <div >
         <h4>{{user_name}}'s reviews:</h4>
-        <div class="d-flex flex-row align-items-start scrollspy-example flex-wrap align-items-stretch" style="max-height:500px; overflow-y: scroll;, height: auto; width:100%">
+        <div class="d-flex flex-row align-items-start scrollspy-example flex-wrap align-items-stretch" style="max-height:500px; overflow-y: scroll;">
             {% for r in reviews %}
-            <div class="container" style="max-width: 700px ; margin:10px; background-color: #fcfcfc; width: max-content; border-radius: 10px; min-width: 200px; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);" >
-
-                <div style="padding: 10px 10px 1px 10px; ">
-                    <h5>{{r['game']}} review:</h5>
-
-                    <p><b>Score: </b> {{r['score']}}</p>
-                    <p ><b>Content:</b><br> {{r['content']}}</p>
-
-                </div>
+            <div class="card h-100" style="max-width: 700px; min-width: 250px; margin:10px;">
+                  <div class="card-body" >
+                      <p class="card-text"><b>{{r['game']}} review:</b></p>
+                      <p class="card-text" style="margin-left: 10px"><b>Score: </b> {{r['score']}}</p>
+                      <p class="card-text" style="margin-left: 10px"><b>Content:</b><br> {{r['content']}}</p>
+                  </div>
             </div>
             {% endfor %}
         </div>

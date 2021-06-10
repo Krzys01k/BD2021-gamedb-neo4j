@@ -1,14 +1,14 @@
 {%extends "base.html"%}
 
 {%block content%}
-<h1>Games:</h1>
-<div style="margin: 0 50px;" class="row row-cols-1 row-cols-md-3 g-4">
+<h1 style="margin-left: 40px">Games:</h1>
+<div style="margin: 0 50px 50px 50px;" class="row row-cols-1 row-cols-md-3 g-4">
     {% for game in games %}
     <div class="col">
         <div class="card h-100">
             <img src="{{game['photo_url']}}" class="card-img-top" alt="{{game['title']}}">
             <div class="card-body">
-                <a href="/games/{{game['title']}}" class="stretched-link"> <h5 class="card-title">{{ game['title'] }}</h5> </a>
+                <a href="/games/{{game['title']}}" class="stretched-link" style="color: black; text-decoration: none"> <h5 class="card-title">{{ game['title'] }}</h5> </a>
                 <p class="card-text">{{ game['desc'] }}</p>
             </div>
         </div>
