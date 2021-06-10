@@ -258,7 +258,7 @@ def register():
             if nodes.values().__len__() == 0:
                 session.run("MERGE (n:User{name:'%s', password:'%s'}) RETURN (n)" % (request.form.get("name"), hash_password(request.form.get("password"))))
                 name = request.form.get("name")
-                message = "register successful"
+                return redirect('/register_success')
             else:
                 message = "register failed"
 
@@ -270,6 +270,12 @@ def logout():
     global name
     name = ""
     return render_template("base.html", name=name, message="Logged Out")
+
+
+@app.route('/register_success')
+def register_success():
+    global name
+    return render_template("base.html", name=name, message="Register Successful")
 
 
 
