@@ -1,5 +1,5 @@
 # BD2021-gamedb-neo4j
-Grafowa baza danych realizowana w ramach kursu BD2021 AGH
+Grafowa baza danych realizowana w ramach kursu BD2021 AGH. 
 W bazie danych przechowujemy informacje o grach, użytkownikach, oraz recenzjach na temat gier.
 
 # Technologie
@@ -57,27 +57,27 @@ Aplikacja webowa pozwala na
 
 ## Endpointy
 ### GET:
-/games
-/games/<game_title>
-/add_review/<game_title>
-/update_review/<user_name>/<game_title>
-/delete_review/<user_name>/<game_title>
-/reviews
-/users
-/users/<user_name>
-/login
-/register
-/logout
-/register_success
-/login_success
+- /games
+- /games/<game_title>
+- /add_review/<game_title>
+- /update_review/<user_name>/<game_title>
+- /delete_review/<user_name>/<game_title>
+- /reviews
+- /users
+- /users/<user_name>
+- /login
+- /register
+- /logout
+- /register_success
+- /login_success
 
 ### POST:
-/add_review/<game_title>
-/update_review/<user_name>/<game_title>
-/delete_review/<user_name>/<game_title>
-/users
-/users/<user_name>
-/follow
-/unfollow
-/login
-/register
+- /add_review/<game_title>
+- /update_review/<user_name>/<game_title>
+- /delete_review/<user_name>/<game_title>
+- /users
+- /users/<user_name>
+- /follow
+- /unfollow
+- /login
+- /register
