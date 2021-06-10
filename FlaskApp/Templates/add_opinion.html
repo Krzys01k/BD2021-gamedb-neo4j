@@ -1,0 +1,18 @@
+{%extends "base.html"%}
+
+{%block content%}
+<div class="container" style="margin:50px auto; width:600px; ">
+    <h2>Add Review for {{game_title}}</h2>
+    <form action = "/add_opinion/{{game_title}}" method = "POST">
+      <div class="mb-3">
+        <label for="InputScore" class="form-label" >Score</label>
+        <input class="form-control" id="InputScore" name="score" type="number" min="0" max="100">
+      </div>
+      <div class="mb-3">
+        <label for="InputContent" class="form-label" >Content:</label>
+        <input type="text" class="form-control" id="InputContent" name = "content" style="height: 200px">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{%endblock%}
