@@ -97,6 +97,15 @@ def review_exists(author_name, game_title):
             return 1
         return 0
 
+def get_reviews():
+    with driver.session() as session:
+        nodes = session.run("match (r:Review) return (r)")
+        reviews = []
+        for node in nodes.data():
+            reviews.append(node['r'])
+
+        return reviews
+
 
 @app.route('/')
 def hello_world():
@@ -128,7 +137,10 @@ def add_opinion_form(game_title):
 
     return render_template("add_opinion.html", name=name, game_title=game_title)
 
-
+@app.route('/reviews')
+def reviews():
+    reviews = get_reviews()
+    return render_template("reviews.html", reviews=reviews, name=name)
 
 
 @app.route('/users', methods=['POST', 'GET'])
