@@ -88,7 +88,7 @@ def add_review_to_db(author_name, game_title, score, content):
 
 
 def update_review_in_db(author_name, game_title, score, content):
-    # adds review by user author_name to game with game_title with parameters score i content
+    # updates review by user author_name to game with game_title with parameters score i content
     with driver.session() as session:
         session.run(
             """
@@ -101,7 +101,7 @@ def update_review_in_db(author_name, game_title, score, content):
 
 
 def delete_review_in_db(author_name, game_title):
-    # adds review by user author_name to game with game_title with parameters score i content
+    # deletes review by user author_name to game with game_title
     with driver.session() as session:
         session.run(
             """
