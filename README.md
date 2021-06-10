@@ -1,6 +1,6 @@
 # BD2021-gamedb-neo4j
-Grafowa baza danych realizowana w ramach kursu BD2021 AGH. 
-W bazie danych przechowujemy informacje o grach, użytkownikach, oraz recenzjach na temat gier.
+Aplikacja webowa z listą gier, pozwalająca na dodawanie opinii o grach. Aplikacja korzysta z grafowej bazy danych w któej przechowujemy informacje o grach, użytkownikach, oraz recenzjach na temat gier. \
+Projekt został wykonany w ramach kursu BD2021 AGH.
 
 # Technologie
 neo4j, python, flask
