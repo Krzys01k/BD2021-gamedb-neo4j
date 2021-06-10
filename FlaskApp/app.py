@@ -84,6 +84,20 @@ def add_review_to_db(author_name, game_title, score, content):
     return
 
 
+def review_exists(author_name, game_title):
+    with driver.session() as session:
+        nodes = session.run(
+            """
+            match (u:User{name:'%s'}), (g:Game{title:'%s'})
+            where  (u)-[:WROTE]->()-[:ADDRESSES]->(g)
+            return (u)
+            """ % (author_name, game_title)
+        )
+        if nodes.values().__len__() != 0:
+            return 1
+        return 0
+
+
 @app.route('/')
 def hello_world():
     return render_template("base.html", message="Hello !!!!", name=name)
@@ -98,8 +112,11 @@ def game_details(game_title):
     global name
     # TODO: posts = get_posts(game_title)
     game = get_game(game_title)
+    rev_exists = True
+    if name:
+        rev_exists = review_exists(name, game.get('title'))
     
-    return render_template("game_details.html", name=name, game=game)
+    return render_template("game_details.html", name=name, game=game, rev_exists=rev_exists)
 
 
 @app.route('/add_opinion/<game_title>', methods=['POST', 'GET'])
