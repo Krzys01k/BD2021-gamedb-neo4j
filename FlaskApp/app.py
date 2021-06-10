@@ -52,6 +52,7 @@ def get_game(game_title):
         
 
 def get_followed(name):
+    # returns list of names of users that are following user with username name
     with driver.session() as session:
         followed_nodes = session.run("match (u:User)-[f:FOLLOWS]->(u2:User{name:'%s'}) return (u)" % name)
         followed = []
@@ -62,6 +63,7 @@ def get_followed(name):
 
 
 def get_following(name):
+    # returns list of names of users that are followed by user with username name
     with driver.session() as session:
         following_nodes = session.run("match (u:User)<-[f:FOLLOWS]-(u2:User{name:'%s'}) return (u)" % name)
         following = []
@@ -72,6 +74,7 @@ def get_following(name):
 
 
 def add_review_to_db(author_name, game_title, score, content):
+    # adds review by user author_name to game with game_title with parameters score i content
     with driver.session() as session:
         session.run(
             """
@@ -85,6 +88,7 @@ def add_review_to_db(author_name, game_title, score, content):
 
 
 def review_exists(author_name, game_title):
+    # checks if review exists
     with driver.session() as session:
         nodes = session.run(
             """
@@ -96,6 +100,7 @@ def review_exists(author_name, game_title):
         if nodes.values().__len__() != 0:
             return 1
         return 0
+
 
 def get_reviews():
     with driver.session() as session:
@@ -111,6 +116,7 @@ def get_reviews():
 
 
 def get_user_reviews(user_name):
+    # returns list of reviews by user with name user_name
     with driver.session() as session:
         nodes = session.run(
             """
