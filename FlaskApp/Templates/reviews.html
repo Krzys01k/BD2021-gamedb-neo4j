@@ -7,8 +7,10 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">{{ review['score'] }}</h5>
+                <h5 class="card-title">Game: {{ review['title'] }}</h5>
+                <p class="card-text">Score: {{ review['score'] }}</p>
                 <p class="card-text">{{ review['content'] }}</p>
+                <p class="card-text">Author: {{ review['name'] }}</p>
             </div>
         </div>
     </div>

@@ -99,10 +99,13 @@ def review_exists(author_name, game_title):
 
 def get_reviews():
     with driver.session() as session:
-        nodes = session.run("match (r:Review) return (r)")
+        nodes = session.run("match (u:User)-[:WROTE]->(r:Review)-[:ADDRESSES]->(g:Game) \
+            return u.name as name, r.score as score, r.content as content, g.title as title")
         reviews = []
-        for node in nodes.data():
-            reviews.append(node['r'])
+
+        nodes_data = nodes.data()
+        for i in range(len(nodes_data)):
+            reviews.append(nodes_data[i])
 
         return reviews
 
